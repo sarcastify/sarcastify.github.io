@@ -1,0 +1,134 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="apple-touch-icon" href="icon.png">
+  <!-- Place favicon.ico in the root directory -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400" rel="stylesheet"> 
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <meta name="theme-color" content="#fafafa">
+</head>
+
+<body>
+  <div class="body-wrapper">
+  <!--[if lte IE 9]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+  <![endif]-->
+<div class="content">
+  <div class="main-content">
+
+    <h1 id="lblTitle">
+    Sarcastify
+    </h1>
+    <textarea id="txtInput" placeholder="UhhH.. ThIs is WhErE yOu TyPe."></textarea>
+    <div id="pnlResult" class="panel-result">
+        <span class="placeholder">I guEsS tHiS is wheRe thE rEsUlT woUld be, HuH?</span>
+    </div>
+  </div>
+  
+    <footer>
+      <ul>
+          <li>
+              <a href="#about">About</a>
+          </li>
+      </ul>    
+    </footer>
+  </div>
+</div>
+
+<a name="about"></a>
+<section class="about">
+      <div class="about-content">
+          <h3>
+            About
+          </h3>
+            <p>It is <em>exceedingly</em> annoying to type in the <a href="https://knowyourmeme.com/memes/mocking-spongebob">"spongemock" meme format</a>. Now you can have entire copypasta, easy.</p>
+            <p>I'm not collecting any data except basic "page view" analytics.</p>
+            <p>I'm not saving any of the text you copy, or even passing it to the server. All the work gets done by your browser. Why in the ever-loving hell would I want to save the stuff put into this?</p>
+            <p>I'm not begging for anything, it costs next to nothing to host this.</p>
+          <h3>
+            Who
+          </h3>
+            <p>Just this guy in California. I'm a father and a husband. I build things on the internet. I also get bored from time to time and things like this are sometimes made. I don't really keep any sort of "profile" but <a href="https://www.reddit.com/user/sarcastify">I am on reddit</a>. A lot. In fact that's the only way to get ahold of me.</p>
+            
+    <footer>
+        <ul>
+            <li>
+                <a href="#top">back</a>
+            </li>
+        </ul>    
+      </footer>
+      </div>
+      
+    </section>
+
+
+  <script>
+    /*https://stackoverflow.com/a/4541963*/
+    var waitForFinalEvent = (function () {
+      var timers = {};
+      return function (callback, ms, uniqueId) {
+        if (!uniqueId) {
+          uniqueId = "dOn't Call this TwIcE wItHout A uNiQuEiD!";
+        }
+        if (timers[uniqueId]) {
+          clearTimeout (timers[uniqueId]);
+        }
+        timers[uniqueId] = setTimeout(callback, ms);
+      };
+    })();
+  /*End waitForIt*/
+
+
+    const txtInput = document.getElementById("txtInput"),
+          pnlResult = document.getElementById("pnlResult"),
+          hfResult = document.getElementById("hfResult"),
+          lblTitle = document.getElementById("lblTitle"),
+          btnCopyToClipboard = document.getElementById("btnCopyToClipboard"),
+          placeholderHTML = pnlResult.innerHTML;
+    
+    function sarcastify(val) { 
+      var input = val.replace(/(?:\r\n|\r|\n)/g, '<br>'), /*https://stackoverflow.com/a/784547*/
+          arr = input.match(/\S+/g) || [],
+          lastLength = 0,
+          res = "";
+      for (var i = 0; i < arr.length; i++) {
+        // Each word
+        var word = arr[i], 
+          isLower = i % 2 == 0;
+        for (var c = 0; c < word.length; c++) {
+          // Each letter
+          var cha = word.charAt(c),
+            randomFactor = (Math.floor(Math.random() * 5) + 1) == 1; // approx 1 in 5
+          res += isLower ? (randomFactor ? cha.toUpperCase() : cha.toLowerCase()) : cha.toUpperCase();
+          isLower = !isLower;
+        }
+        res += " ";
+      }	
+      res = res.trim();
+      var hasResult = res.length > 0 ;
+      pnlResult.innerHTML = hasResult ? res : placeholderHTML;
+      return false;
+    }
+    function waitForIt() {
+      waitForFinalEvent(sarcastify(txtInput.value), 250, "rAnDoM StRiNg");
+    }
+    txtInput.addEventListener("input", waitForIt);
+  </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-28154407-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'UA-28154407-2');
+  </script>
+</body>
+</html>
